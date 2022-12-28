@@ -1,0 +1,3 @@
+[submodule "empirical_splice_status"]
+	path = empirical_splice_status
+	url = https://github.com/COMBINE-lab/empirical_splice_status.git
