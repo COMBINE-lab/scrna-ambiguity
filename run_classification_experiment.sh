@@ -25,7 +25,9 @@ mkdir -p $classification_data_dir
 
 # download 10x human 2020-A reference
 echo " - Fetching 10x human 2020-A reference"
-# wget -qO- https://cf.10xgenomics.com/supp/cell-exp/refdata-gex-GRCh38-2020-A.tar.gz | tar xzf - -C $classification_data_dir
+cmd="wget -qO- https://cf.10xgenomics.com/supp/cell-exp/refdata-gex-GRCh38-2020-A.tar.gz | tar xzf - -C $classification_data_dir"
+eval $cmd
+
 human2020A_ref_dir="$classification_data_dir/refdata-gex-GRCh38-2020-A"
 human2020A_genome_path="$human2020A_ref_dir/fasta/genome.fa"
 human2020A_genes_path="$human2020A_ref_dir/genes/genes.gtf"
@@ -36,11 +38,9 @@ human2020A_spliceu_ref_dir="$human2020A_ref_dir/refdata-gex-GRCh38-2020-A_splice
 human2020A_spliceu_ref_prefix="refdata-gex-GRCh38-2020-A_spliceu"
 mkdir -p $human2020A_spliceu_ref_dir
 
-# Rscript $script_dir/make_spliceu_txome.R \
-# $human2020A_genome_path \
-# $human2020A_genes_path \
-# $human2020A_spliceu_ref_dir \
-# $human2020A_spliceu_ref_prefix 
+cmd="Rscript $script_dir/make_spliceu_txome.R $human2020A_genome_path $human2020A_genes_path $human2020A_spliceu_ref_dir $human2020A_spliceu_ref_prefix"
+eval $cmd
+
 
 human2020A_spliceu_mature_path="$human2020A_spliceu_ref_dir/${human2020A_spliceu_ref_prefix}_mature.fa"
 human2020A_spliceu_nascent_path="$human2020A_spliceu_ref_dir/${human2020A_spliceu_ref_prefix}_nascent.fa"

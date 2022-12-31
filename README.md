@@ -14,12 +14,10 @@ To run the whole pipeline, please set all the paths in the `run_me.config`, and 
 We recommend run the pipeline in a conda environment. To reduce the time of environment creation, we recommend to use [mamba](https://mamba.readthedocs.io/en/latest/installation.html). 
 
 ```sh
-mamba create -n scrna-ambiguity r-essentials r-doParallel
-bioconductor-genomicfeatures bioconductor-biostrings bioconductor-bsgenome 
-star kb-python simpleaf -y && conda activate scrna-ambiguity
+mamba create -n scrna-ambiguity r-essentials=4.1 r-doParallel=1.0.17 bioconductor-genomicfeatures=1.46.1 bioconductor-biostrings=2.62.0 bioconductor-bsgenome bsgenome=1.62.0 r-ggplot2=3.4.0 star=2.7.10b kb-python=0.27.3 simpleaf=0.7.0 -y && conda activate scrna-ambiguity
 ```
 
-If you want to use conda instead, simply replace the `mamba` in the above command with `conda`
+If you want to use conda instead, simply replace the `mamba` in the above command with `conda`. The `conda_env.yml` file in the GitHub repository can be used to create the exact conda env we used to run the pipeline.
 
 ## Install stand-alone packages
 Some packages are not available on conda, so they need to be manually installed.
@@ -57,11 +55,10 @@ cd target/release && find ${PWD} -name "piscem"
 ```
 
 ### HSHMP_2022
-Please use the printed path from the following bash command as the `HSHMP_2022` variable
+Please use the printed path from the following bash command as the `HSHMP_2022` variable.
 
 ```sh
 git clone https://github.com/pachterlab/HSHMP_2022.git && cd HSHMP_2022 && git checkout 03456b623f5c2bb12212b4745e3523cbba57b44c
-
 pwd
 
 ```

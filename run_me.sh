@@ -1,70 +1,99 @@
+# scrna-ambiguity
+
+**Note**: This repository uses git submodules, please clone it with
+
+```{bash}
+git clone --recurse-submodules https://github.com/COMBINE-lab/scrna-ambiguity
+```
+
+To run the whole pipeline, please set all the paths in the `run_me.config`, and run the `run_me.sh` in terminal by calling `. run_me.sh`. Running the classification experiment and the analysis of the two mouse brain nuclei datasets  will take approximately 450 GB of disk space. If you choose to run the analysis of the STARsolo simulation as well, please make sure there is another 200 GB of disk space left on your disk.
+
+## Conda environment setup
+
+### Create conda environment
+We recommend run the pipeline in a conda environment. To reduce the time of environment creation, we recommend to use [mamba](https://mamba.readthedocs.io/en/latest/installation.html). 
+
+```sh
+mamba create -n scrna-ambiguity r-essentials r-doParallel
+bioconductor-genomicfeatures bioconductor-biostrings bioconductor-bsgenome 
+star kb-python simpleaf -y && conda activate scrna-ambiguity
+```
+
+If you want to use conda instead, simply replace the `mamba` in the above command with `conda`
+
+## Install stand-alone pacakges
+Some packages are not available on conda, so they need to be manually installed.
+
+### BBMap
+
+[BBMap](https://github.com/BioInfoTools/BBMap) is used to simulate the sequencing reads for the classification experiment. We used BBMap 39.01 in the analysis, which can be directly downloaded from [this](https://versaweb.dl.sourceforge.net/project/bbmap/BBMap_39.01.tar.gz) link. The path to the decompressed folder of the downloaded file should be specified in the `run_me.config` file. To download the path and print the path to the decompressed folder, please run the following bash command.
+
+```sh
+wget https://versaweb.dl.sourceforge.net/project/bbmap/BBMap_39.01.tar.gz && tar -xzvf BBMap_39.01.tar.gz
+
+cd bbmap && pwd
+
+```
+
+### empirical_splice_status
+
+[`empirical_splice_status`](https://github.com/COMBINE-lab/empirical_splice_status) is used to obtain the matching-based true splicing status of the simulated reads in the classification experiment. `empirical_splice_status` is a rust program. To install it, please make sure rust is [installed](https://www.rust-lang.org/tools/install), and then run the following bash command. Please use the path to the `release` folder printed from running the following bash command as the`empirical_splice_status` variable in the `run_me.config`
+
+```sh
+git clone https://github.com/COMBINE-lab/empirical_splice_status.git && cd empirical_splice_status
+cargo build --release
+cd target/release && pwd
+
+```
+
+### piscem
+[`piscem`](https://github.com/COMBINE-lab/piscem) is the new latest mapping tools in the alevin-fry ecosystem. If offers more concise and memory frugal index than any other methods tested in this work. To install it, you might need to set your `CXX` and `CC` path. Please use the path to the `piscem` executable printed from running the following bash command as the `piscem` variable in the `run_me.config`.
+
+```sh
+git clone https://github.com/COMBINE-lab/piscem.git && cd piscem
+cargo build --release
+
+cd target/release && find ${PWD} -name "piscem"
+```
+
+### HSHMP_2022
+Please use the printed path from the following bash command as the `HSHMP_2022` variable
+
+```sh
+git clone https://github.com/pachterlab/HSHMP_2022.git && cd HSHMP_2022 && git checkout 03456b623f5c2bb12212b4745e3523cbba57b44c
+
+pwd
+
+```
+
+### kallisto-D
+Please follow the [GitHub repository](https://github.com/pachterlab/kallisto-D) to install it, and use the path to the `kallisto` executable as the `kallistod` variable in the `run_me.config` file. 
 
 
-#  This script serves as an entry point of the experiments performed in the manuscript.
-## There are totally three experiemnts:
-## 1. Read splicing status classification experiment
-## 2. Analysis of STARsolo simulation
-## 3. Analysis of a mouse single-nucleus RNA-seq dataset
+## Specify the root working directory
 
-# create conda env
-# mamba create -n scrna-ambiguity \
-# r-essentials r-doParallel \
-# bioconductor-genomicfeatures bioconductor-biostrings bioconductor-bsgenome \
-# star kb-python simpleaf \
-# -y
-# conda activate scrna-ambiguity
+The `root_dir` variable in the `run_me.config` file serves as the root working directory of the whole pipeline. After specifying a path, please make sure that there are at least 450GB free space in the disk.
 
-# script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-script_dir="$(dirname "$0")"
-echo $script_dir
-# script_dir="/mnt/scratch7/rob/splici_ambig/scripts"
+## Run the pipeline
 
-# . $script_dir/run_me.config
+After set all the paths in the `run_me.config` file and made sure that there are enough free disk space, the pipeline could be run by calling the `run_me.sh` file. 
 
-#################################################################################################################
-# classification experiment
-#################################################################################################################
-# There are three parts in this experiment
-# 1. read simulation
-# 2. read mapping
-# 3. evaluation
-echo "================================================================="
-echo "Start running the classification experiment"
-sh $script_dir/run_classification_experiment.sh $script_dir
+```sh
+chmod +x *.sh
+chmod +x *.R
+. run_me.sh
+```
 
-# if the simulated reads has been genearated, provide the 
-# bbmap_sim dir from previous run as the second argument
-# bash $script_dir/run_classification_experiment.sh $script_dir $bbmap_sim_dir
+### (OPTIONAL) Run the Analysis of the STARsolo simulation
 
-
-#################################################################################################################
-# Real mouse neuron nuclei dataset
-#################################################################################################################
-# As the dataset referred in the preprint and the GitHub repo are not the same  
-# In the preprint: https://www.10xgenomics.com/resources/datasets/5k-adult-mouse-brain-nuclei-isolated-with-chromium-nuclei-isolation-kit-3-1-standard
-# in the Github Repo: https://www.10xgenomics.com/resources/datasets/5-k-mouse-e-18-combined-cortex-hippocampus-and-subventricular-zone-nuclei-3-1-standard-6-0-0
-# here we qantify both of them  
-
-echo "================================================================="
-echo "Start running the mouse nuclei experiment"
-sh $script_dir/run_mouse_nuclei.sh $script_dir
+To run the analysis of the STARsolo simulation, please comment out the line #65 in the `run_me.sh`. **As this experiment is not mentioned in the manuscript, this analysis is optional.** 
 
 
 
 
-#################################################################################################################
-# STARsolo simulation
-#################################################################################################################
-# In this experiment, we run the MultiGeneYes simulation from STARsolo preprint. 
-# The quantification result will be generated using all tested methods 
-# Then, by comparing with the ground truth, we compute the cell-level Spearman correlation
-# of each tested method to the ground truth.
 
-echo "================================================================="
-echo "Start running the STARsolo simulation experiment"
-# sh $script_dir/run_starsolo_simulation.sh $script_dir 
 
-# If starsolo simulation files have been fetched, provide the path
-# as the second argument
-# sh $script_dir/run_starsolo_simulation.sh $script_dir $starsim_read_dir
+
+
+
 
