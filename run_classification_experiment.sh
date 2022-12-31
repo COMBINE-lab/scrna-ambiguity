@@ -75,25 +75,25 @@ cd $bbmap_sim_dir
 ## simulate reads
 ### sc mature
 cmd="$randomreads seed=42 ref=$human2020A_spliceu_mature_path paired=f out=$cytoplasmic_mature_R2_path q=36 adderrors=f banns=t minlen=150 maxlen=150 reads=4000000"
-echo $cmd
+eval $cmd
 
 ### sc nascent
 cmd="$randomreads seed=42 ref=$human2020A_spliceu_nascent_path paired=f out=$cytoplasmic_nascent_R2_path q=36 adderrors=f banns=t minlen=150 maxlen=150 reads=1000000"
-echo $cmd
+eval $cmd
 
 ### sn mature
 cmd="$randomreads seed=42 ref=$human2020A_spliceu_mature_path paired=f out=$nuclear_mature_R2_path q=36 adderrors=f banns=t minlen=150 maxlen=150 reads=1000000"
-echo $cmd
+eval $cmd
 
 ### sn nascent
 cmd="$randomreads seed=42 ref=$human2020A_spliceu_nascent_path paired=f out=$nuclear_nascent_R2_path q=36 adderrors=f banns=t minlen=150 maxlen=150 reads=4000000"
-echo $cmd
+eval $cmd
 
 ## make reads as 10x format
 echo "   - Make reads as 10x format"
 
 cmd="Rscript $script_dir/bbmap_to_10x.R $cytoplasmic_mature_R2_path $cytoplasmic_nascent_R2_path $nuclear_mature_R2_path $nuclear_nascent_R2_path $cytoplasmic_mature_R1_path $cytoplasmic_nascent_R1_path $nuclear_mature_R1_path $nuclear_nascent_R1_path $n_threads"
-echo $cmd
+eval $cmd
 
 # get barcode (CB+UMI) to read name mapping
 # awk 'BEGIN {capture=0;rname="nothing";rseq="nothing"}{if ( $1 ~ /^\+/ ) {capture=0; print rseq"\t"rname;} else if (capture) {rseq=substr($0,2);} else if ( $1 ~ /^@/ ) {rname=substr($0,2); capture=1;} }'
@@ -109,22 +109,22 @@ mkdir -p $matching_based_truth_dir
 echo "   - Build FM index"
 human2020A_spliceu_fm_index_path="$matching_based_truth_dir/human2020A_spliceu_fm_index"
 cmd="$empirical_splice_status/build_index $human2020A_spliceu_all_path $human2020A_spliceu_fm_index_path"
-echo $cmd
+eval $cmd
 
 ## find occurences
 echo "   - Find occurences"
 
 cmd="$empirical_splice_status/map_queries $human2020A_spliceu_fm_index_path $cytoplasmic_mature_R2_path > $matching_based_truth_dir/cytoplasmic_mature_splice_status_truth.tsv"
-echo $cmd
+eval $cmd
 
 cmd="$empirical_splice_status/map_queries $human2020A_spliceu_fm_index_path $cytoplasmic_nascent_R2_path > $matching_based_truth_dir/cytoplasmic_nascent_splice_status_truth.tsv"
-echo $cmd
+eval $cmd
 
 cmd="$empirical_splice_status/map_queries $human2020A_spliceu_fm_index_path $nuclear_mature_R2_path > $matching_based_truth_dir/nuclear_mature_splice_status_truth.tsv"
-echo $cmd
+eval $cmd
 
 cmd="$empirical_splice_status/map_queries $human2020A_spliceu_fm_index_path $nuclear_nascent_R2_path > $matching_based_truth_dir/nuclear_nascent_splice_status_truth.tsv"
-echo $cmd
+eval $cmd
 
 ## convert read name in truth files to barcode
 echo "   - Convert read name in truth files to barcode"
@@ -166,7 +166,7 @@ mkdir -p $classification_af_splici_idx_dir
 
 # build index
 cmd="$time -v $simpleaf index -o $classification_af_splici_idx_dir -t $n_threads -f $human2020A_genome_path -g $human2020A_genes_path -r 150 > $classification_af_splici_idx_dir/simpleaf_index.time 2>&1"
-echo $cmd
+eval $cmd
 
 classification_af_splici_map_dir="$classification_af_splici_dir/af_splici_map"
 mkdir -p $classification_af_splici_map_dir
@@ -176,16 +176,16 @@ do
     o_dir="$classification_af_splici_map_dir/$sname"
     mkdir -p $o_dir
 
-    cmd="$salmon alevin --chromiumV3 -p $n_threads -i $classification_af_splici_idx_dir/index -l IU --rad -o $o_dir -1 $bbmap_sim_fastq_dir/$sname/${sname}_R1.fastq -2 $bbmap_sim_fastq_dir/$sname/${sname}_R2.fastq --sketch > $o_dir/salmon_alevin.time 2>&1"
-    echo $cmd
+    cmd="$time -v $salmon alevin --chromiumV3 -p $n_threads -i $classification_af_splici_idx_dir/index -l IU --rad -o $o_dir -1 $bbmap_sim_fastq_dir/$sname/${sname}_R1.fastq -2 $bbmap_sim_fastq_dir/$sname/${sname}_R2.fastq --sketch > $o_dir/salmon_alevin.time 2>&1"
+    eval $cmd
 
     # write mapping record to tsv
     cmd="$af view -r ${o_dir}/map.rad > ${o_dir}/map.rad.tsv"
-    echo $cmd
+    eval $cmd
 
     # get the final splice status
     cmd="Rscript $script_dir/empirical_splice_status_af.R ${o_dir}/map.rad.tsv  ${classification_af_splici_map_dir}/${sname}_splice_status_empirical.tsv"
-    echo $cmd
+    eval $cmd
 done
 
 #---------------------------------------------------------------------------------------------------------------#
@@ -200,8 +200,8 @@ classification_af_spliceu_idx_dir="$classification_af_spliceu_dir/af_spliceu_idx
 mkdir -p $classification_af_spliceu_idx_dir
 
 # build index
-cmd="$time -v $simpleaf index -o $classification_af_spliceu_idx_dir -t $n_threads --ref-seq $human2020A_spliceu_all_path > $classification_af_spliceu_idx_dir/simpleaf_index.time 2>&1"
-echo $cmd
+cmd="$time -v $simpleaf index --keep-duplicates -o $classification_af_spliceu_idx_dir -t $n_threads --ref-seq $human2020A_spliceu_all_path > $classification_af_spliceu_idx_dir/simpleaf_index.time 2>&1"
+eval $cmd
 
 classification_af_spliceu_map_dir="$classification_af_spliceu_dir/af_spliceu_map"
 mkdir -p $classification_af_spliceu_map_dir
@@ -211,16 +211,16 @@ do
     o_dir="$classification_af_spliceu_map_dir/$sname"
     mkdir -p $o_dir
 
-    cmd="$salmon alevin --chromiumV3 -p $n_threads -i $classification_af_spliceu_idx_dir/index -l IU --rad -o $o_dir -1 $bbmap_sim_fastq_dir/$sname/${sname}_R1.fastq -2 $bbmap_sim_fastq_dir/$sname/${sname}_R2.fastq --sketch > $o_dir/salmon_alevin.time 2>&1"
-    echo $cmd
+    cmd="$time -v $salmon alevin --chromiumV3 -p $n_threads -i $classification_af_spliceu_idx_dir/index -l IU --rad -o $o_dir -1 $bbmap_sim_fastq_dir/$sname/${sname}_R1.fastq -2 $bbmap_sim_fastq_dir/$sname/${sname}_R2.fastq --sketch > $o_dir/salmon_alevin.time 2>&1"
+    eval $cmd
 
     # write mapping record to tsv
     cmd="$af view -r ${o_dir}/map.rad > ${o_dir}/map.rad.tsv"
-    echo $cmd
+    eval $cmd
 
     # get the final splice status
     cmd="Rscript $script_dir/empirical_splice_status_af.R ${o_dir}/map.rad.tsv  ${classification_af_spliceu_map_dir}/${sname}_splice_status_empirical.tsv"
-    echo $cmd
+    eval $cmd
 done
 
 #---------------------------------------------------------------------------------------------------------------#
@@ -234,7 +234,7 @@ classification_af_spliceu_piscem_idx_dir="$classification_af_spliceu_piscem_dir/
 mkdir -p $classification_af_spliceu_piscem_idx_dir
 
 cmd="$time -v $piscem build -s $human2020A_spliceu_all_path -k 31 -m 19 -t $n_threads -o $classification_af_spliceu_piscem_idx_dir/af_spliceu_piscem > $classification_af_spliceu_piscem_idx_dir/piscem_build.time 2>&1"
-echo $cmd
+eval $cmd
 
 ### mapping
 classification_af_spliceu_piscem_map_dir="$classification_af_spliceu_piscem_dir/piscem_map"
@@ -246,15 +246,15 @@ do
     mkdir -p $o_dir
 
     cmd="$time -v $piscem map-sc -i $classification_af_spliceu_piscem_idx_dir/af_spliceu_piscem -g chromium_v3 -1 $bbmap_sim_fastq_dir/$sname/${sname}_R1.fastq -2 $bbmap_sim_fastq_dir/$sname/${sname}_R2.fastq -t $n_threads -o $o_dir > $o_dir/piscem_map_sc.time 2>&1"
-    echo $cmd
+    eval $cmd
 
     # write mapping record to tsv
     cmd="$af view -r ${o_dir}/map.rad > ${o_dir}/map.rad.tsv"
-    echo $cmd
+    eval $cmd
     
     # get the final splice status
     cmd="Rscript $script_dir/empirical_splice_status_af.R ${o_dir}/map.rad.tsv  ${classification_af_spliceu_piscem_map_dir}/${sname}_splice_status_empirical.tsv"
-    echo $cmd
+    eval $cmd
 done
 
 #---------------------------------------------------------------------------------------------------------------#
@@ -274,17 +274,17 @@ classification_kb_single_nucleus_idx_path="$classification_kb_idx_dir/kbd_idx_na
 
 ##### kb ref is used to extract the matrure transcripts
 cmd="$time -v $kb ref -i $classification_kb_idx_dir/standard_index.idx --kallisto $kallistod --workflow standard --overwrite -f1 $classification_kb_idx_dir/f1 -g $classification_kb_idx_dir/g $human2020A_genome_path  $human2020A_genes_path > $classification_kb_idx_dir/kb_ref.time 2>&1"
-echo $cmd
+eval $cmd
 
 ##### for cytoplamic (single-cell) dataset, the index is constructed using
 ##### mature transcripts as the reference, and the whole genome as the D-list
 cmd="$time -v $kallistod index -t $n_threads -i $classification_kb_single_cell_idx_path -d $human2020A_genome_path $classification_kb_idx_dir/f1 > $classification_kb_idx_dir/kbd_idx_mature_as_ref_genome_as_dlist.time 2>&1"
-echo $cmd
+eval $cmd
 
 ##### for nuclear (single-nucleus) dataset, the index is constructed using
 ##### nascent transcripts as the reference, and the mature transcripts as the D-list
 cmd="$time -v $kallistod index -t $n_threads -i $classification_kb_single_nucleus_idx_path -d $classification_kb_idx_dir/f1 $human2020A_spliceu_nascent_path > $classification_kb_idx_dir/kbd_idx_nascent_as_ref_mature_as_dlist.time 2>&1"
-echo $cmd
+eval $cmd
 
 ### mapping
 #### make directory
@@ -299,15 +299,15 @@ do
         mkdir -p $o_dir
 
         cmd="$time -v $kallistod bus -x 10xv3 --unstranded -i "$classification_kb_idx_dir/${index}.idx" -o $o_dir -t $n_threads $bbmap_sim_fastq_dir/$sname/${sname}_R1.fastq $bbmap_sim_fastq_dir/$sname/${sname}_R2.fastq > $o_dir/kallisto_bus.time 2>&1"
-        echo $cmd
+        eval $cmd
 
         # write mapping record to tsv
         cmd="$bustools text $o_dir/output.bus --output $o_dir/output.bus.tsv"
-        echo $cmd
+        eval $cmd
     done
 
     # after mapping a sample to both indices, get the final splice status
-    cmd="Rscript $script_dir/empirical_splice_status_kb.R $classification_kb_map_dir/$sname/kbd_idx_mature_as_ref_genome_as_dlist/output.bus.tsv $classification_kb_map_dir/$sname/kbd_idx_nascent_as_ref_mature_as_dlist/output.bus.tsv $classification_kb_map_dir/${sname}_splice_status_empirical_kb.tsv"
-    echo $cmd
+    cmd="Rscript $script_dir/empirical_splice_status_kb.R $classification_kb_map_dir/$sname/kbd_idx_mature_as_ref_genome_as_dlist/output.bus.tsv $classification_kb_map_dir/$sname/kbd_idx_nascent_as_ref_mature_as_dlist/output.bus.tsv $classification_kb_map_dir/${sname}_splice_status_empirical.tsv"
+    eval $cmd
 done
 
