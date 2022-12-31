@@ -6,7 +6,7 @@
 git clone --recurse-submodules https://github.com/COMBINE-lab/scrna-ambiguity
 ```
 
-To run the whole pipeline, please set all the paths in the `run_me.config`, and run the `run_me.sh` in terminal by calling `. run_me.sh`. Running the classification experiment and the analysis of the two mouse brain nuclei datasets  will take approximately 450 GB of disk space. If you choose to run the analysis of the STARsolo simulation as well, please make sure there is another 200 GB of disk space left on your disk.
+To run the whole pipeline, please set all the paths in the `run_me.config`, and run the `run_me.sh` in a terminal by calling `. run_me.sh`. Running the classification experiment and the analysis of the two mouse brain nuclei datasets  will take approximately 450 GB of disk space. If you choose to run the analysis of the STARsolo simulation as well, please make sure there is another 200 GB of disk space left on your disk.
 
 ## Conda environment setup
 
@@ -21,7 +21,7 @@ star kb-python simpleaf -y && conda activate scrna-ambiguity
 
 If you want to use conda instead, simply replace the `mamba` in the above command with `conda`
 
-## Install stand-alone pacakges
+## Install stand-alone packages
 Some packages are not available on conda, so they need to be manually installed.
 
 ### BBMap
@@ -67,7 +67,7 @@ pwd
 ```
 
 ### kallisto-D
-Please follow the [GitHub repository](https://github.com/pachterlab/kallisto-D) to install it, and use the path to the `kallisto` executable as the `kallistod` variable in the `run_me.config` file. 
+Please follow the instructions in the [GitHub repository](https://github.com/pachterlab/kallisto-D) to install it, and use the path to the `kallisto` executable as the `kallistod` variable in the `run_me.config` file. 
 
 
 ## Specify the root working directory
@@ -76,7 +76,7 @@ The `root_dir` variable in the `run_me.config` file serves as the root working d
 
 ## Run the pipeline
 
-After set all the paths in the `run_me.config` file and made sure that there are enough free disk space, the pipeline could be run by calling the `run_me.sh` file. 
+After you have set all the paths in the `run_me.config` file and made sure that there are enough free disk space, the pipeline can be run by calling the `run_me.sh` file. 
 
 ```sh
 chmod +x *.sh
