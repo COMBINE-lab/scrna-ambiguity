@@ -1,7 +1,7 @@
 library(ggplot2)
 library(patchwork)
 
-root_dir=file.path("/mnt/scratch2/scrna_ambiguity")
+root_dir=file.path("scrna_ambiguity")
 f_vec = list.files(root_dir, pattern = "\\.time$", recursive=TRUE)
 
 log_list = sapply(f_vec, function(f) {

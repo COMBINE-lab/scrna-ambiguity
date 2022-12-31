@@ -1,7 +1,4 @@
 args = commandArgs(trailingOnly=TRUE)
-# args = c()
-# args[1]="/mnt/scratch2/scrna_ambiguity/classification_experiment/data/bbmap_sim/matching_based_truth"
-# args[2]="/mnt/scratch2/scrna_ambiguity/classification_experiment/data/bbmap_sim/read_fastqs"
 suppressPackageStartupMessages({
     library(Biostrings)
     library(GenomicFeatures)
