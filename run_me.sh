@@ -30,11 +30,25 @@ echo $script_dir
 # 3. evaluation
 echo "================================================================="
 echo "Start running the classification experiment"
-# sh $script_dir/run_classification_experiment.sh $script_dir
+sh $script_dir/run_classification_experiment.sh $script_dir
 
 # if the simulated reads has been genearated, provide the 
 # bbmap_sim dir from previous run as the second argument
 # bash $script_dir/run_classification_experiment.sh $script_dir $bbmap_sim_dir
+
+
+#################################################################################################################
+# Real mouse neuron nuclei dataset
+#################################################################################################################
+# As the dataset referred in the preprint and the GitHub repo are not the same  
+# In the preprint: https://www.10xgenomics.com/resources/datasets/5k-adult-mouse-brain-nuclei-isolated-with-chromium-nuclei-isolation-kit-3-1-standard
+# in the Github Repo: https://www.10xgenomics.com/resources/datasets/5-k-mouse-e-18-combined-cortex-hippocampus-and-subventricular-zone-nuclei-3-1-standard-6-0-0
+# here we qantify both of them  
+
+echo "================================================================="
+echo "Start running the mouse nuclei experiment"
+sh $script_dir/run_mouse_nuclei.sh $script_dir
+
 
 
 
@@ -53,17 +67,4 @@ echo "Start running the STARsolo simulation experiment"
 # If starsolo simulation files have been fetched, provide the path
 # as the second argument
 # sh $script_dir/run_starsolo_simulation.sh $script_dir $starsim_read_dir
-
-
-#################################################################################################################
-# Real mouse neuron nuclei dataset
-#################################################################################################################
-# As the dataset referred in the preprint and the GitHub repo are not the same  
-# In the preprint: https://www.10xgenomics.com/resources/datasets/5k-adult-mouse-brain-nuclei-isolated-with-chromium-nuclei-isolation-kit-3-1-standard
-# in the Github Repo: https://www.10xgenomics.com/resources/datasets/5-k-mouse-e-18-combined-cortex-hippocampus-and-subventricular-zone-nuclei-3-1-standard-6-0-0
-# here we qantify both of them  
-
-echo "================================================================="
-echo "Start running the mouse nuclei experiment"
-sh $script_dir/run_mouse_nuclei.sh $script_dir
 
