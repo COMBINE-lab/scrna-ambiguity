@@ -17,7 +17,7 @@ We recommend run the pipeline in a conda environment. To reduce the time of envi
 mamba create -n scrna-ambiguity r-essentials=4.1 r-doParallel=1.0.17 bioconductor-genomicfeatures=1.46.1 bioconductor-biostrings=2.62.0 bioconductor-bsgenome bsgenome=1.62.0 r-ggplot2=3.4.0 star=2.7.10b kb-python=0.27.3 simpleaf=0.7.0 -y && conda activate scrna-ambiguity
 ```
 
-If you want to use conda instead, simply replace the `mamba` in the above command with `conda`. The `conda_env.yml` file in the GitHub repository can be used to create the exact conda env we used to run the pipeline. **Note:** The included conda environment was created under linux, and, in general, the code in the current repository is unlikely to work directly under other operating systems.
+If you want to use conda instead, simply replace the `mamba` in the above command with `conda`. The `conda_env.yml` file in the GitHub repository can be used to create the exact conda env we used to run the pipeline (but **please be sure to change the `prefix:` path at the end of the file**). **Note:** The included conda environment was created under linux, and, in general, the code in the current repository is unlikely to work directly under other operating systems.
 
 ## Install stand-alone packages
 Some packages are not available on conda, so they need to be manually installed.
