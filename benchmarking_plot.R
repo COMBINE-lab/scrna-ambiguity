@@ -1,5 +1,5 @@
 library(ggplot2)
-library(patchwork)
+# library(patchwork)
 
 root_dir=file.path("scrna_ambiguity")
 f_vec = list.files(root_dir, pattern = "\\.time$", recursive=TRUE)
@@ -7,8 +7,6 @@ f_vec = list.files(root_dir, pattern = "\\.time$", recursive=TRUE)
 log_list = sapply(f_vec, function(f) {
     tail(read.table(file.path(root_dir, f), sep = "!"),22)
 })
-
-# log_list = log_list[-41]
 
 log_df = as.data.frame(do.call(rbind, lapply(log_list, function(x) {
     memory = strsplit(x[9], "\tMaximum resident set size (kbytes): ", fixed = TRUE)[[1]][2]
@@ -24,8 +22,6 @@ log_df = as.data.frame(do.call(rbind, lapply(log_list, function(x) {
     } else {
         warning("Needs more conditions")
     }
-
-    # cat(wall_clock_time, "\n\n")
 
     c(wall_clock_time, memory)
 })))
@@ -72,7 +68,6 @@ ggplot(data=classification_af_quant_log_df, aes(x=method, y=as.numeric(time_minu
     scale_fill_brewer(palette="Spectral")
 
 
-
 classification_kb_quant_log_df = classification_log_df[grepl("kallisto_bus.time", rownames(classification_log_df)) ,]
 
 
@@ -102,9 +97,6 @@ ggplot(data=classification_kb_quant_log_df, aes(x=method, y=as.numeric(time_minu
     geom_bar(position="dodge", stat="identity") + 
   xlab("Method") + ylab("Run time in minutes") + 
     scale_fill_brewer(palette="Spectral")
-
-
-
 
 
 # for the starsolo simulation

@@ -1,3 +1,4 @@
+#!/usr/bin/env Rscript
 args = commandArgs(trailingOnly=TRUE)
 
 genome_path = args[1]

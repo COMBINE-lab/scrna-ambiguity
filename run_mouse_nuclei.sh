@@ -293,13 +293,8 @@ eval $cmd
 
 ##### kb ref is used to extract the matrure transcripts
 ##### We still need this to get the t2g file
-# cmd="$time -v $kb ref -i $realdata_kb_idx_dir/standard_index.idx --kallisto $kallistod --workflow standard --overwrite -f1 $realdata_kb_idx_dir/f1 -g $realdata_kb_idx_dir/g $mouseGRCm39_genome_path  $mouseGRCm39_genes_path > $realdata_kb_idx_dir/kb_ref.time 2>&1"
+cmd="$time -v $kb ref -i $realdata_kb_idx_dir/standard_index.idx --kallisto $kallistod --workflow standard --overwrite -f1 $realdata_kb_idx_dir/f1 -g $realdata_kb_idx_dir/g $mouseGRCm39_genome_path  $mouseGRCm39_genes_path > $realdata_kb_idx_dir/kb_ref.time 2>&1"
 eval $cmd
-
-##### make kb t2g
-# cmd="paste <(cat $realdata_kb_idx_dir/g|cut -f2|cut -d. -f1) <(cat $realdata_kb_idx_dir/g|cut -f2|cut -d. -f1) > $realdata_kb_idx_dir/g_"
-eval $cmd
-
 
 ##### for nuclear (single-nucleus) dataset, the index is constructed using
 ##### nascent transcripts as the reference, and the mature transcripts as the D-list

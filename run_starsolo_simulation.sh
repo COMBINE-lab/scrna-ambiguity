@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
+
 script_dir="$1"
 
 . $script_dir/run_me.config
-
-starsim_root_dir="$root_dir/starsolo_simulation"
-mkdir -p $starsim_root_dir
 
 # make working dir
 starsim_data_dir="$starsim_root_dir/data"
@@ -17,7 +15,8 @@ starsim_read_dir="$starsim_data_dir/starsim_reads"
 
 ## simulation reads
 cmd="wget -qO- https://umd.box.com/shared/static/d2hzsqtqqqn285xal8lmqe7dy2va2jir.gz | tar xzf - -C $starsim_data_dir"
-# ln -s /mnt/scratch5/splici_ambig/data/star_simulation/pbmc_5k_sims_human_CR_3.0.0_MultiGeneYes $starsim_read_dir
+eval $cmd
+
 starsim_read1_path="$starsim_read_dir/_R1_.fq"
 starsim_read2_path="$starsim_read_dir/_R2_.fq"
 starsim_truth_dir="$starsim_dir/truth"
