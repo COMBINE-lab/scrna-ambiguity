@@ -32,10 +32,6 @@ eval $cmd
 cmd="wget -qO- https://cf.10xgenomics.com/samples/cell-exp/6.0.0/SC3_v3_NextGem_DI_Nuclei_5K_Multiplex/SC3_v3_NextGem_DI_Nuclei_5K_Multiplex_fastqs.tar | tar xf - -C $realdata_E18_brain_read_dir"
 eval $cmd
 
-## make the high quality cellbarcode list
-
-
-
 ## make read input for each tool
 ### alevin-fry
 ### For simpleaf, fastq files need to be comma separated 
@@ -209,7 +205,6 @@ realdata_adult_brain_star_quant_dir="$realdata_star_dir/star_quant/adult_brain"
 mkdir -p $realdata_adult_brain_star_quant_dir
 
 cmd="/usr/bin/time -v $star --genomeDir $realdata_star_idx_dir --readFilesCommand zcat --soloFeatures GeneFull --runThreadN $n_threads --readFilesIn $realdata_ss_adult_brain_read_path --soloCBwhitelist $whitelist_path --soloUMIlen 12 --limitIObufferSize 50000000 50000000 --soloType CB_UMI_Simple --outSAMtype None --outFileNamePrefix ${realdata_adult_brain_star_quant_dir}/ > $realdata_adult_brain_star_quant_dir/star_quant.time 2>&1"
-
 eval $cmd
 
 # gzip quant result to ease the analysis
@@ -224,9 +219,7 @@ realdata_E18_brain_star_quant_dir="$realdata_star_dir/star_quant/E18_brain"
 mkdir -p $realdata_E18_brain_star_quant_dir
 
 cmd="/usr/bin/time -v $star --genomeDir $realdata_star_idx_dir --readFilesCommand zcat --soloFeatures GeneFull --runThreadN $n_threads --readFilesIn $realdata_ss_E18_brain_read_path --soloCBwhitelist $whitelist_path --soloUMIlen 12 --limitIObufferSize 50000000 50000000 --soloType CB_UMI_Simple --outSAMtype None --outFileNamePrefix ${realdata_E18_brain_star_quant_dir}/ > $realdata_E18_brain_star_quant_dir/star_quant.time 2>&1"
-
 eval $cmd
-
 
 # gzip quant result to ease the analysis
 cmd="gzip ${realdata_E18_brain_star_quant_dir}/Solo.out/GeneFull/raw/*"

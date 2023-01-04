@@ -19,6 +19,7 @@ suppressPackageStartupMessages({
 genome = readDNAStringSet(genome_path, format = "fasta")
 names(genome) = stringr::word(names(genome), 1)
 
+# mature transcripts
 suppressWarnings({
     suppressMessages({
         txdb <- GenomicFeatures::makeTxDbFromGFF(gene_gtf_path, format = "gtf")
@@ -31,7 +32,6 @@ suppressWarnings({
     })
 }) 
 
-# mature transcripts
 
 # nascent transcripts
 nascent_txps = getSeq(genome, genes(txdb))
