@@ -3,8 +3,8 @@
 #  This script serves as an entry point of the experiments performed in the manuscript.
 ## There are totally three experiemnts:
 ## 1. Read splicing status classification experiment
-## 2. Analysis of STARsolo simulation
-## 3. Analysis of a mouse single-nucleus RNA-seq dataset
+## 2. Analysis of a mouse single-nucleus RNA-seq dataset
+## (optional) Analysis of STARsolo simulation
 
 script_dir="$(dirname "$0")"
 echo $script_dir

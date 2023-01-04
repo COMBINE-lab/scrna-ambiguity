@@ -10,7 +10,6 @@ mkdir -p $starsim_data_dir
 #---------------------------------------------------------------------------------------------------------------#
 echo "  - Preparing STARsolo simulation reads"
 # prepare data
-# TODO we might want to download starsolo simulated data from somewhere
 starsim_read_dir="$starsim_data_dir/starsim_reads"
 
 ## simulation reads
@@ -138,6 +137,13 @@ whitelist_path="$ALEVIN_FRY_HOME/plist/10x_v3_permit.txt"
 cmd="/usr/bin/time -v $star --genomeDir $starsim_star_idx_dir --soloFeatures Gene --runThreadN $n_threads --readFilesIn $starsim_read2_path $starsim_read1_path --soloCBwhitelist $whitelist_path --soloUMIlen 12 --limitIObufferSize 50000000 50000000 --soloType CB_UMI_Simple --outSAMtype None --outFileNamePrefix ${starsim_star_quant_dir}/ > $starsim_star_quant_dir/starsolo.time 2>&1"
 
 eval $cmd
+
+# gzip quant result to ease the analysis
+cmd="gzip ${starsim_star_quant_dir}/Solo.out/Gene/raw/*"
+echo $cmd
+
+cmd="gzip ${starsim_star_quant_dir}/Solo.out/Gene/filtered/*"
+echo $cmd
 
 #---------------------------------------------------------------------------------------------------------------#
 echo "  - Running kallisto-D|bustools"

@@ -74,9 +74,10 @@ pwd
 ```
 
 ### kallisto-D
-Please follow the instructions in the [GitHub repository](https://github.com/pachterlab/kallisto-D) to install it, and use the path to the `kallisto` executable as the `kallistod` variable in the `run_me.config` file. 
+Please follow the instructions in the [GitHub repository](https://github.com/pachterlab/HSHMP_2022/tree/cfd6958be6ab65fc340bf1df5f1b0e77f19ff967) to install it, and use the path to the `kallisto` executable as the `kallistod` variable in the `run_me.config` file. In this work, we used commit [`cfd6958be6ab65fc340bf1df5f1b0e77f19ff967`](https://github.com/pachterlab/HSHMP_2022/tree/cfd6958be6ab65fc340bf1df5f1b0e77f19ff967).
 
-
+### bustools
+Please follow the instructions in the [GitHub repository](https://github.com/BUStools/bustools/tree/89a8a5ddee4ec1c3bb95dfb42e13f2d2ba86e9a1) to install it, and use the path to the `bustools` executable as the `bustools` variable in the `run_me.config`. In this work, we used the commit [`89a8a5ddee4ec1c3bb95dfb42e13f2d2ba86e9a1`](https://github.com/BUStools/bustools/tree/89a8a5ddee4ec1c3bb95dfb42e13f2d2ba86e9a1).
 ## Specify the root working directory
 
 The `root_dir` variable in the `run_me.config` file serves as the root working directory of the whole pipeline. After specifying a path, please make sure that there are at least 450GB free space in the disk.
