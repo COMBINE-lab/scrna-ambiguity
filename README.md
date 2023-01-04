@@ -35,22 +35,23 @@ cd bbmap && pwd
 
 ### empirical_splice_status
 
-[`empirical_splice_status`](https://github.com/COMBINE-lab/empirical_splice_status) is used to obtain the matching-based true splicing status of the simulated reads in the classification experiment. `empirical_splice_status` is a rust program. To install it, please make sure rust is [installed](https://www.rust-lang.org/tools/install), and then run the following bash command. 
+[`empirical_splice_status`](https://github.com/COMBINE-lab/empirical_splice_status) is used to obtain the matching-based true splicing status of the simulated reads in the classification experiment. `empirical_splice_status` is a rust program. To install it, please make sure rust is [installed](https://www.rust-lang.org/tools/install).
 
 
-The source code of `empirical_splice_status` will be included in this repository if you clone it recursively by following the above commands. Then you can run the following command without worrying about the `empirical_splice_status` variable in the `run_me.config` file.
+The source code of `empirical_splice_status` will be included in this repository if you follow the above `git clone  --recurse-submodules` command to recursively clone this repository. Then you can run the following command without worrying about the `empirical_splice_status` variable in the `run_me.config` file.
 
 ```bash
 cargo build --release --manifest-path=empirical_splice_status/Cargo.toml
 ```
 
-If the repository is not cloned recursively, just clone `empirical_splice_status` before build it.If you build it to somewhere else, please use the path to the `release` folder printed from running the following bash command as the`empirical_splice_status` variable in the `run_me.config`
+If the repository is not cloned recursively, just clone `empirical_splice_status` before build it. If you build it to somewhere else, please use the path to the `release` folder printed from running the following bash command as the`empirical_splice_status` variable in the `run_me.config`
 
 
 ```sh
-git clone https://github.com/COMBINE-lab/empirical_splice_status.git && cd empirical_splice_status
-cargo build --release
-cd target/release && pwd
+rm -r empirical_splice_status
+git clone https://github.com/COMBINE-lab/empirical_splice_status.git 
+cargo build --release --manifest-path=empirical_splice_status/Cargo.toml
+cd empirical_splice_status/target/release && pwd
 
 ```
 
