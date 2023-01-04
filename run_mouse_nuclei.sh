@@ -4,9 +4,6 @@ script_dir="$1"
 
 . $script_dir/run_me.config
 
-brain_root_dir="$root_dir/mouse_brain_nuclei"
-mkdir -p $brain_root_dir
-
 #################################################################################################################
 # Real mouse neuron nuclei dataset
 #################################################################################################################
@@ -34,6 +31,11 @@ eval $cmd
 
 cmd="wget -qO- https://cf.10xgenomics.com/samples/cell-exp/6.0.0/SC3_v3_NextGem_DI_Nuclei_5K_Multiplex/SC3_v3_NextGem_DI_Nuclei_5K_Multiplex_fastqs.tar | tar xf - -C $realdata_E18_brain_read_dir"
 eval $cmd
+
+## make the high quality cellbarcode list
+
+
+
 ## make read input for each tool
 ### alevin-fry
 ### For simpleaf, fastq files need to be comma separated 
@@ -239,11 +241,8 @@ mkdir -p $realdata_kb_idx_dir
 realdata_kb_single_nucleus_idx_path="$realdata_kb_idx_dir/kbd_idx_nascent_as_ref_mature_as_dlist.idx"
 
 ### kb ref is used to extract the matrure transcripts
-# cmd="$time -v $kb ref -i $realdata_kb_idx_dir/standard_index.idx --kallisto $kallistod --workflow standard --overwrite -f1 $realdata_kb_idx_dir/f1 -g $realdata_kb_idx_dir/g $mouseGRCm39_genome_path  $mouseGRCm39_genes_path > $realdata_kb_idx_dir/kb_ref.time 2>&1"
-# eval $cmd
-
-### make kb t2g
-# paste <(cat $realdata_kb_idx_dir/g|cut -f2|cut -d. -f1) <(cat $realdata_kb_idx_dir/g|cut -f2|cut -d. -f1) > $realdata_kb_idx_dir/g_
+cmd="$time -v $kb ref -i $realdata_kb_idx_dir/standard_index.idx --kallisto $kallistod --bustools $bustools --workflow standard --overwrite -f1 $realdata_kb_idx_dir/f1 -g $realdata_kb_idx_dir/g $mouseGRCm39_genome_path  $mouseGRCm39_genes_path > $realdata_kb_idx_dir/kb_ref.time 2>&1"
+eval $cmd
 
 ### for nuclear (single-nucleus) dataset, the index is constructed using
 ### nascent transcripts as the reference, and the mature transcripts as the D-list
@@ -293,7 +292,7 @@ eval $cmd
 
 ##### kb ref is used to extract the matrure transcripts
 ##### We still need this to get the t2g file
-cmd="$time -v $kb ref -i $realdata_kb_idx_dir/standard_index.idx --kallisto $kallistod --workflow standard --overwrite -f1 $realdata_kb_idx_dir/f1 -g $realdata_kb_idx_dir/g $mouseGRCm39_genome_path  $mouseGRCm39_genes_path > $realdata_kb_idx_dir/kb_ref.time 2>&1"
+cmd="$time -v $kb ref -i $realdata_kb_idx_dir/standard_index.idx --kallisto $kallistod --bustools $bustools --workflow standard --overwrite -f1 $realdata_kb_idx_dir/f1 -g $realdata_kb_idx_dir/g $mouseGRCm39_genome_path  $mouseGRCm39_genes_path > $realdata_kb_idx_dir/kb_ref.time 2>&1"
 eval $cmd
 
 ##### for nuclear (single-nucleus) dataset, the index is constructed using

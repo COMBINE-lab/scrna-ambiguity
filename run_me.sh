@@ -1,4 +1,4 @@
-
+#!/usr/bin/env bash
 
 #  This script serves as an entry point of the experiments performed in the manuscript.
 ## There are totally three experiemnts:
@@ -6,19 +6,8 @@
 ## 2. Analysis of STARsolo simulation
 ## 3. Analysis of a mouse single-nucleus RNA-seq dataset
 
-# create conda env
-# mamba create -n scrna-ambiguity \
-# r-essentials r-doParallel \
-# bioconductor-genomicfeatures bioconductor-biostrings bioconductor-bsgenome \
-# star kb-python simpleaf \
-# -y
-# conda activate scrna-ambiguity
-
-# script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 script_dir="$(dirname "$0")"
-# script_dir="/mnt/scratch7/rob/splici_ambig/scripts"
-
-# . $script_dir/run_me.config
+echo $script_dir
 
 #################################################################################################################
 # classification experiment
@@ -30,6 +19,8 @@ script_dir="$(dirname "$0")"
 echo "================================================================="
 echo "Start running the classification experiment"
 sh $script_dir/run_classification_experiment.sh $script_dir
+
+
 
 #################################################################################################################
 # Real mouse neuron nuclei dataset
@@ -53,7 +44,6 @@ sh $script_dir/run_mouse_nuclei.sh $script_dir
 # Then, by comparing with the ground truth, we compute the cell-level Spearman correlation
 # of each tested method to the ground truth.
 
-# If needs to run the STARsolo simulation analysis, please comment out the following three lines.
 # echo "================================================================="
 # echo "Start running the STARsolo simulation experiment"
 # sh $script_dir/run_starsolo_simulation.sh $script_dir 

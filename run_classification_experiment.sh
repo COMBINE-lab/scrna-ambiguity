@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 script_dir="$1"
-bbmap_sim_dir="$2"
 
 . $script_dir/run_me.config
 
@@ -131,26 +130,6 @@ echo "   - Convert read name in truth files to barcode"
 cmd="Rscript $script_dir/convert_readname_to_barcode.R $matching_based_truth_dir $bbmap_sim_fastq_dir"
 eval $cmd
 
-# if [ "$bbmap_sim_dir" = "" ]; then
-#     bash $script_dir/bbmap_sim_commands.sh $script_dir $classification_data_dir 
-# else 
-#     bbmap_sim_fastq_dir="$bbmap_sim_dir/read_fastqs"
-
-#     ### read1 path
-#     cytoplasmic_mature_R1_path="$bbmap_sim_fastq_dir/cytoplasmic_mature/cytoplasmic_mature_R1.fastq"
-#     cytoplasmic_nascent_R1_path="$bbmap_sim_fastq_dir/cytoplasmic_nascent/cytoplasmic_nascent_R1.fastq"
-#     nuclear_mature_R1_path="$bbmap_sim_fastq_dir/nuclear_mature/nuclear_mature_R1.fastq"
-#     nuclear_nascent_R1_path="$bbmap_sim_fastq_dir/nuclear_nascent/nuclear_nascent_R1.fastq"
-
-#     ### read2 path
-#     cytoplasmic_mature_R2_path="$bbmap_sim_fastq_dir/cytoplasmic_mature/cytoplasmic_mature_R2.fastq"
-#     cytoplasmic_nascent_R2_path="$bbmap_sim_fastq_dir/cytoplasmic_nascent/cytoplasmic_nascent_R2.fastq"
-#     nuclear_mature_R2_path="$bbmap_sim_fastq_dir/nuclear_mature/nuclear_mature_R2.fastq"
-#     nuclear_nascent_R2_path="$bbmap_sim_fastq_dir/nuclear_nascent/nuclear_nascent_R2.fastq"
-
-#     # get matching based ground truth assignment
-#     matching_based_truth_dir="$bbmap_sim_dir/matching_based_truth"
-# fi
 # 2. Read alignment 
 
 #---------------------------------------------------------------------------------------------------------------#
@@ -233,7 +212,7 @@ mkdir -p $classification_af_spliceu_piscem_dir
 classification_af_spliceu_piscem_idx_dir="$classification_af_spliceu_piscem_dir/af_spliceu_piscem_idx"
 mkdir -p $classification_af_spliceu_piscem_idx_dir
 
-cmd="$time -v $piscem build -s $human2020A_spliceu_all_path -k 31 -m 19 -t $n_threads -o $classification_af_spliceu_piscem_idx_dir/af_spliceu_piscem > $classification_af_spliceu_piscem_idx_dir/piscem_build.time 2>&1"
+cmd="$time -v $piscem build --overwrite -s $human2020A_spliceu_all_path -k 31 -m 19 -t $n_threads -o $classification_af_spliceu_piscem_idx_dir/af_spliceu_piscem > $classification_af_spliceu_piscem_idx_dir/piscem_build.time 2>&1"
 eval $cmd
 
 ### mapping
