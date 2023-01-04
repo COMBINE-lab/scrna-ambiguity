@@ -1,0 +1,5 @@
+{
+  "classification_root_path" : <fill in with root path to classification experiment>,
+  "mouse_brain_root_path" : <fill in with root path to brain experiment output>,
+  "GRCm39_HSHMP_nascent_fasta" : <fill in with path to GRCm39 nascent transcript file produced by HSHMP scripts>
+}
