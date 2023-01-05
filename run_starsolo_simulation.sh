@@ -140,10 +140,10 @@ eval $cmd
 
 # gzip quant result to ease the analysis
 cmd="gzip ${starsim_star_quant_dir}/Solo.out/Gene/raw/*"
-echo $cmd
+eval $cmd
 
 cmd="gzip ${starsim_star_quant_dir}/Solo.out/Gene/filtered/*"
-echo $cmd
+eval $cmd
 
 #---------------------------------------------------------------------------------------------------------------#
 echo "  - Running kallisto-D|bustools"

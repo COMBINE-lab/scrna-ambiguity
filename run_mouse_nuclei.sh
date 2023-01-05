@@ -209,10 +209,10 @@ eval $cmd
 
 # gzip quant result to ease the analysis
 cmd="gzip ${realdata_adult_brain_star_quant_dir}/Solo.out/GeneFull/raw/*"
-echo $cmd
+eval $cmd
 
 cmd="gzip ${realdata_adult_brain_star_quant_dir}/Solo.out/GeneFull/filtered/*"
-echo $cmd
+eval $cmd
 
 ### combined Cortex, Hippocampus and Subventricular Zone Nuclei
 realdata_E18_brain_star_quant_dir="$realdata_star_dir/star_quant/E18_brain"
@@ -223,10 +223,10 @@ eval $cmd
 
 # gzip quant result to ease the analysis
 cmd="gzip ${realdata_E18_brain_star_quant_dir}/Solo.out/GeneFull/raw/*"
-echo $cmd
+eval $cmd
 
 cmd="gzip ${realdata_E18_brain_star_quant_dir}/Solo.out/GeneFull/filtered/*"
-echo $cmd
+eval $cmd
 
 #---------------------------------------------------------------------------------------------------------------#
 echo "  - Running kallisto-D|bustools using spliceu nascent transcripts"
