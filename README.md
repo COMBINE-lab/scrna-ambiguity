@@ -82,19 +82,19 @@ cd ../../..
 ```
 
 ### HSHMP_2022
-Please use the printed path from the following bash command as the `HSHMP_2022` variable.
+Please use the printed path from the following bash command as the `HSHMP_2022` variable. In this work, we followed the code in commit [cfd6958be6ab65fc340bf1df5f1b0e77f19ff967](https://github.com/pachterlab/HSHMP_2022/tree/cfd6958be6ab65fc340bf1df5f1b0e77f19ff967).
 
 ```sh
 git clone https://github.com/pachterlab/HSHMP_2022.git
 cd HSHMP_2022
-git checkout 03456b623f5c2bb12212b4745e3523cbba57b44c
+git checkout cfd6958be6ab65fc340bf1df5f1b0e77f19ff967
 pwd
 cd ..
 
 ```
 
 ### kallisto-D
-Please follow the instructions in the [GitHub repository](https://github.com/pachterlab/HSHMP_2022/tree/cfd6958be6ab65fc340bf1df5f1b0e77f19ff967) to install it, and use the path to the `kallisto` executable as the `kallistod` variable in the `run_me.config` file. In this work, we used commit [`cfd6958be6ab65fc340bf1df5f1b0e77f19ff967`](https://github.com/pachterlab/HSHMP_2022/tree/cfd6958be6ab65fc340bf1df5f1b0e77f19ff967).
+Please follow the instructions in the [GitHub repository](https://github.com/pachterlab/kallisto-D/tree/26daa940c25ca1787de8aab8d9c8dda1802006ea) to install it, and use the path to the `kallisto` executable as the `kallistod` variable in the `run_me.config` file. In this work, we used commit [`26daa940c25ca1787de8aab8d9c8dda1802006ea`](https://github.com/pachterlab/kallisto-D/tree/26daa940c25ca1787de8aab8d9c8dda1802006ea).
 
 ### bustools
 Please follow the instructions in the [GitHub repository](https://github.com/BUStools/bustools/tree/89a8a5ddee4ec1c3bb95dfb42e13f2d2ba86e9a1) to install it, and use the path to the `bustools` executable as the `bustools` variable in the `run_me.config`. In this work, we used the commit [`89a8a5ddee4ec1c3bb95dfb42e13f2d2ba86e9a1`](https://github.com/BUStools/bustools/tree/89a8a5ddee4ec1c3bb95dfb42e13f2d2ba86e9a1).
