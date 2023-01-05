@@ -1,4 +1,12 @@
-# scrna-ambiguity
+# Repository accompanying "Understanding and evaluating ambiguity in single-cell and single-nucleus RNA-sequencing"
+
+This repository accompanies the paper:
+
+
+> Understanding and evaluating ambiguity in single-cell and single-nucleus RNA-sequencing \
+> Dongze He, Charlotte Soneson, Rob Patro \
+> bioRxiv 2023.01.04.522742; doi: https://doi.org/10.1101/2023.01.04.522742
+
 
 **Note**: This repository uses git submodules, please clone it with
 
