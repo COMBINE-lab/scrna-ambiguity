@@ -12,6 +12,8 @@ This repository accompanies the paper:
 
 ```{bash}
 git clone --recurse-submodules https://github.com/COMBINE-lab/scrna-ambiguity
+cd scrna-ambiguity
+
 ```
 
 To run the whole pipeline, please set all the paths in the `run_me.config`, and run the `run_me.sh` in a terminal by calling `. run_me.sh`. Running the classification experiment and the analysis of the two mouse brain nuclei datasets  will take approximately 450 GB of disk space. If you choose to run the analysis of the STARsolo simulation as well, please make sure there is another 200 GB of disk space left on your disk.
@@ -22,7 +24,9 @@ To run the whole pipeline, please set all the paths in the `run_me.config`, and 
 We recommend run the pipeline in a conda environment. To reduce the time of environment creation, we recommend to use [mamba](https://mamba.readthedocs.io/en/latest/installation.html). 
 
 ```sh
-mamba create -n scrna-ambiguity r-essentials=4.1 r-doParallel=1.0.17 bioconductor-genomicfeatures=1.46.1 bioconductor-biostrings=2.62.0 bioconductor-bsgenome bsgenome=1.62.0 r-ggplot2=3.4.0 star=2.7.10b kb-python=0.27.3 simpleaf=0.8.1 -y && conda activate scrna-ambiguity
+mamba create -n scrna-ambiguity r-essentials=4.1 r-doParallel=1.0.17 bioconductor-genomicfeatures=1.46.1 bioconductor-biostrings=2.62.0 bioconductor-bsgenome bsgenome=1.62.0 r-ggplot2=3.4.0 star=2.7.10b kb-python=0.27.3 simpleaf=0.8.1 -y
+conda activate scrna-ambiguity
+
 ```
 
 If you want to use conda instead, simply replace the `mamba` in the above command with `conda`. The `conda_env.yml` file in the GitHub repository can be used to create the exact conda env we used to run the pipeline. **Note:** The included conda environment was created under linux, and, in general, the code in the current repository is unlikely to work directly under other operating systems.
@@ -36,8 +40,8 @@ Some packages are not available on conda, so they need to be manually installed.
 
 ```sh
 wget https://versaweb.dl.sourceforge.net/project/bbmap/BBMap_39.01.tar.gz && tar -xzvf BBMap_39.01.tar.gz
-
 cd bbmap && pwd
+cd ..
 
 ```
 
@@ -50,16 +54,18 @@ The source code of `empirical_splice_status` will be included in this repository
 
 ```bash
 cargo build --release --manifest-path=empirical_splice_status/Cargo.toml
+
 ```
 
 If the repository is not cloned recursively, just clone `empirical_splice_status` before build it. If you build it to somewhere else, please use the path to the `release` folder printed from running the following bash command as the`empirical_splice_status` variable in the `run_me.config`
-
 
 ```sh
 rm -r empirical_splice_status
 git clone https://github.com/COMBINE-lab/empirical_splice_status.git 
 cargo build --release --manifest-path=empirical_splice_status/Cargo.toml
-cd empirical_splice_status/target/release && pwd
+cd empirical_splice_status/target/release
+pwd
+cd ../../..
 
 ```
 
@@ -67,18 +73,23 @@ cd empirical_splice_status/target/release && pwd
 [`piscem`](https://github.com/COMBINE-lab/piscem) is the new latest mapping tools in the alevin-fry ecosystem. If offers more concise and memory frugal index than any other methods tested in this work. To install it, you might need to set your `CXX` and `CC` path. Please use the path to the `piscem` executable printed from running the following bash command as the `piscem` variable in the `run_me.config`.
 
 ```sh
-git clone https://github.com/COMBINE-lab/piscem.git && cd piscem
+git clone https://github.com/COMBINE-lab/piscem.git
+cd piscem
 cargo build --release
-
 cd target/release && find ${PWD} -name "piscem"
+cd ../../..
+
 ```
 
 ### HSHMP_2022
 Please use the printed path from the following bash command as the `HSHMP_2022` variable.
 
 ```sh
-git clone https://github.com/pachterlab/HSHMP_2022.git && cd HSHMP_2022 && git checkout 03456b623f5c2bb12212b4745e3523cbba57b44c
+git clone https://github.com/pachterlab/HSHMP_2022.git
+cd HSHMP_2022
+git checkout 03456b623f5c2bb12212b4745e3523cbba57b44c
 pwd
+cd ..
 
 ```
 
@@ -99,6 +110,7 @@ After you have set all the paths in the `run_me.config` file and made sure that 
 chmod +x *.sh
 chmod +x *.R
 . run_me.sh
+
 ```
 
 ## Generate the plots
