@@ -24,7 +24,7 @@ To run the whole pipeline, please set all the paths in the `run_me.config`, and 
 We recommend run the pipeline in a conda environment. To reduce the time of environment creation, we recommend to use [mamba](https://mamba.readthedocs.io/en/latest/installation.html). 
 
 ```sh
-mamba create -n scrna-ambiguity r-essentials=4.1 r-doParallel=1.0.17 bioconductor-genomicfeatures=1.46.1 bioconductor-biostrings=2.62.0 bioconductor-bsgenome bsgenome=1.62.0 r-ggplot2=3.4.0 star=2.7.10b kb-python=0.27.3 simpleaf=0.8.1 -y
+mamba create -n scrna-ambiguity r-essentials=4.1 r-doParallel=1.0.17 bioconductor-genomicfeatures=1.46.1 bioconductor-biostrings=2.62.0 bioconductor-bsgenome=1.62.0 r-ggplot2=3.4.0 star=2.7.10b kb-python=0.27.3 simpleaf=0.8.1 -y
 conda activate scrna-ambiguity
 
 ```
